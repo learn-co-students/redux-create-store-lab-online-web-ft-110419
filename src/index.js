@@ -1,5 +1,30 @@
 // write your createStore function here
 
+function createStore(reducer) {
+  let state;
+
+  function dispatch(action) {
+    state = reducer(state, action);
+    render();
+  };
+  
+  // dispatch = action => {
+  //   state = reducer(state, action);
+  //   render();
+  // };
+
+  function getState() {
+    return state;
+  }
+
+  // getState = () => state;
+
+  return {
+    dispatch,
+    getState
+  };
+}
+
 function candyReducer(state = [], action) {
   switch (action.type) {
     case 'ADD_CANDY':
@@ -19,4 +44,6 @@ function render() {
 };
 
 // use your createStore function and the functions provided here to create a store
+const store = createStore(candyReducer);
 // once the store is created, call an initial dispatch
+store.dispatch({ type: "ADD_CANDY", candy: "Milky Way" });
