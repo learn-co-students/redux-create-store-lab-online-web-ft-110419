@@ -8,6 +8,20 @@ function candyReducer(state = [], action) {
       return state;
   }
 }
+function createStore(reducer){
+  let state 
+  function getState(){
+    return state
+  }
+  function dispatch(action){
+    state = reducer(state,action)
+    render()
+  }
+  return{
+    dispatch,
+    getState
+  }
+}
 
 function render() {
   let container = document.getElementById('container');
@@ -18,5 +32,8 @@ function render() {
   }
 };
 
+const store = createStore(candyReducer);
+// once the store is created, call an initial dispatch
+store.dispatch({ type: "ADD_CANDY", candy: "twix" });
 // use your createStore function and the functions provided here to create a store
 // once the store is created, call an initial dispatch
